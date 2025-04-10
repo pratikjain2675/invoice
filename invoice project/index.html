@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Billing Software</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Advanced Billing System</h1>
+            <div class="header-controls">
+                <button id="new-invoice"><i class="fas fa-file-alt"></i> New Invoice</button>
+                <button id="print-invoice"><i class="fas fa-print"></i> Print</button>
+                <button id="save-invoice"><i class="fas fa-save"></i> Save</button>
+                <button id="load-invoice"><i class="fas fa-folder-open"></i> Load</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="customer-section">
+                <h2><i class="fas fa-user"></i> Customer Details</h2>
+                <div class="form-group">
+                    <label for="customer-name">Name:</label>
+                    <input type="text" id="customer-name" placeholder="Customer Name">
+                </div>
+                <div class="form-group">
+                    <label for="customer-phone">Phone:</label>
+                    <input type="text" id="customer-phone" placeholder="Phone Number">
+                </div>
+                <div class="form-group">
+                    <label for="customer-email">Email:</label>
+                    <input type="email" id="customer-email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <label for="customer-address">Address:</label>
+                    <textarea id="customer-address" placeholder="Customer Address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="customer-gst">GSTIN:</label>
+                    <input type="text" id="customer-gst" placeholder="Customer GSTIN">
+                </div>
+            </div>
+
+            <div class="invoice-details">
+                <h2><i class="fas fa-file-invoice"></i> Invoice Details</h2>
+                <div class="form-group">
+                    <label for="invoice-number">Invoice #:</label>
+                    <input type="text" id="invoice-number" value="INV-0001" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="invoice-date">Date:</label>
+                    <input type="date" id="invoice-date">
+                </div>
+                <div class="form-group">
+                    <label for="due-date">Due Date:</label>
+                    <input type="date" id="due-date">
+                </div>
+                <div class="form-group">
+                    <label for="payment-method">Payment Method:</label>
+                    <select id="payment-method">
+                        <option value="cash">Cash</option>
+                        <option value="credit-card">Credit Card</option>
+                        <option value="bank-transfer">Bank Transfer</option>
+                        <option value="upi">UPI</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-section">
+                <h2><i class="fas fa-boxes"></i> Products/Services</h2>
+                <div class="product-search">
+                    <input type="text" id="product-search" placeholder="Search products...">
+                    <button id="add-product"><i class="fas fa-plus"></i> Add Product</button>
+                </div>
+                <table id="product-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>GST %</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <!-- Products will be added here dynamically -->
+                    </tbody>
+                </table>
+                <button id="add-row"><i class="fas fa-plus-circle"></i> Add Row</button>
+            </div>
+
+            <div class="totals-section">
+                <div class="discount-section">
+                    <h3><i class="fas fa-tag"></i> Discount</h3>
+                    <div class="form-group">
+                        <label for="discount-type">Type:</label>
+                        <select id="discount-type">
+                            <option value="percentage">Percentage</option>
+                            <option value="fixed">Fixed Amount</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="discount-value">Value:</label>
+                        <input type="number" id="discount-value" min="0" value="0">
+                    </div>
+                    <button id="apply-discount">Apply Discount</button>
+                </div>
+
+                <div class="summary-section">
+                    <h3><i class="fas fa-calculator"></i> Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount:</span>
+                        <span id="total-discount">₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>GST:</span>
+                        <span id="total-gst">₹0.00</span>
+                    </div>
+                    <div class="summary-row grand-total">
+                        <span>Total:</span>
+                        <span id="grand-total">₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Amount Paid:</span>
+                        <input type="number" id="amount-paid" min="0" value="0">
+                    </div>
+                    <div class="summary-row">
+                        <span>Balance Due:</span>
+                        <span id="balance-due">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <h3><i class="fas fa-sticky-note"></i> Notes</h3>
+                <textarea id="invoice-notes" placeholder="Additional notes or terms..."></textarea>
+            </div>
+        </div>
+
+        <footer>
+            <p>Advanced Billing System &copy; 2023 | <span id="current-date"></span></p>
+        </footer>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Product/Service</h2>
+            <div class="form-group">
+                <label for="product-name">Name:</label>
+                <input type="text" id="product-name" placeholder="Product/Service Name">
+            </div>
+            <div class="form-group">
+                <label for="product-description">Description:</label>
+                <textarea id="product-description" placeholder="Product Description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="product-price">Price:</label>
+                <input type="number" id="product-price" min="0" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label for="product-gst">GST %:</label>
+                <select id="product-gst">
+                    <option value="0">0%</option>
+                    <option value="5">5%</option>
+                    <option value="12">12%</option>
+                    <option value="18" selected>18%</option>
+                    <option value="28">28%</option>
+                </select>
+            </div>
+            <button id="save-product">Save Product</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
